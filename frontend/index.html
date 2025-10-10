@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador 2D de Algoritmos de Pathfinding</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Visualizador 2D de Algoritmos de Pathfinding</h1>
+            <p>Compara A*, Dijkstra, D* Lite y BMSSP en tiempo real</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="panel-section">
+                    <h3>Configuración</h3>
+                    <div class="config-group">
+                        <label>
+                            <input type="checkbox" id="diagonal" checked>
+                            Movimiento diagonal
+                        </label>
+                    </div>
+                    <div class="config-group">
+                        <label>Velocidad de animación:</label>
+                        <input type="range" id="speed" min="1" max="100" value="50">
+                        <span id="speed-value">50ms</span>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>🎮 Controles</h3>
+                    <div class="button-group">
+                        <button id="set-start" class="btn btn-primary">Establecer Inicio</button>
+                        <button id="set-goal" class="btn btn-success">Establecer Meta</button>
+                        <button id="clear-path" class="btn btn-warning">Limpiar Camino</button>
+                        <button id="clear-all" class="btn btn-danger"> Limpiar Todo</button>
+                    </div>
+                    <div class="button-group">
+                        <button id="random-obstacles" class="btn btn-secondary">Obstáculos Aleatorios</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Algoritmos</h3>
+                    <div class="algorithm-buttons">
+                        <button id="run-astar" class="btn btn-algorithm" data-algorithm="A*">
+                            <span class="algorithm-name">A*</span>
+                            <span class="algorithm-desc">Heurística + Costo</span>
+                        </button>
+                        <button id="run-dijkstra" class="btn btn-algorithm" data-algorithm="Dijkstra">
+                            <span class="algorithm-name">Dijkstra</span>
+                            <span class="algorithm-desc">Costo mínimo</span>
+                        </button>
+                        <button id="run-dstar" class="btn btn-algorithm" data-algorithm="D* Lite">
+                            <span class="algorithm-name">D* Lite</span>
+                            <span class="algorithm-desc">Dinámico</span>
+                        </button>
+                        <button id="run-bmssp" class="btn btn-algorithm" data-algorithm="BMSSP">
+                            <span class="algorithm-name">BMSSP</span>
+                            <span class="algorithm-desc">Búsqueda limitada</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>📊 Resultados</h3>
+                    <div id="results" class="results-container">
+                        <p class="no-results">Ejecuta un algoritmo para ver los resultados</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Visualization -->
+            <div class="visualization-area">
+                <div class="grid-container">
+                    <div id="grid" class="grid"></div>
+                </div>
+                <div class="grid-info">
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color start"></div>
+                            <span>Inicio</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color goal"></div>
+                            <span>Meta</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color obstacle"></div>
+                            <span>Obstáculo</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color visited"></div>
+                            <span>Visitado</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color frontier"></div>
+                            <span>Frontera</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color path"></div>
+                            <span>Camino</span>
+                        </div>
+                    </div>
+                    <div class="instructions">
+                        <h4> Instrucciones:</h4>
+                        <ul>
+                            <li>Click izquierdo: Bloquear/desbloquear obstáculo</li>
+                            <li>Click derecho: Establecer inicio/meta</li>
+                            <li>Usa los botones para configurar y ejecutar algoritmos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-label">Estado:</span>
+                <span id="status" class="status-value">Listo</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Modo:</span>
+                <span id="mode" class="status-value">Navegación</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Grid:</span>
+                <span id="grid-size" class="status-value">30x20</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
