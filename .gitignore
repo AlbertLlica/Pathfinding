@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# Frontend
+*.map
+
+# Others
+*.bak
+*.swp
+*.tmp
+
+# Compiled C++
+*.o
+*.obj
+*.exe
+*.out
+
+# API cache
+backend/api/__pycache__/
+
+# Test
+*.coverage
+.coverage
+htmlcov/

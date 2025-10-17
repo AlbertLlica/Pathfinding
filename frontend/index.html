@@ -3,83 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador 2D de Algoritmos de Pathfinding</title>
+    <title>Pathfinding Visualizer - Algoritmos Inteligentes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Visualizador 2D de Algoritmos de Pathfinding</h1>
-            <p>Compara A*, Dijkstra, D* Lite y BMSSP en tiempo real</p>
+            <h1>Pathfinding </h1>
         </header>
-
         <div class="main-content">
-            <!-- Control Panel -->
-            <div class="control-panel">
+            <!-- Left: Control Panel -->
+            <aside class="control-panel" aria-label="Panel de control">
                 <div class="panel-section">
                     <h3>Configuración</h3>
                     <div class="config-group">
-                        <label>
+                        <label class="checkbox-container">
                             <input type="checkbox" id="diagonal" checked>
+                            <span class="checkmark"></span>
                             Movimiento diagonal
                         </label>
                     </div>
                     <div class="config-group">
-                        <label>Velocidad de animación:</label>
-                        <input type="range" id="speed" min="1" max="100" value="50">
-                        <span id="speed-value">50ms</span>
+                        <label class="slider-container">
+                            <span class="slider-label">Velocidad de animación</span>
+                            <input type="range" id="speed" min="20" max="500" value="150" class="slider">
+                            <div class="slider-labels">
+                                <span>Rápido</span>
+                                <span id="speed-value">150 ms</span>
+                                <span>Lento</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="config-group">
+                        <label class="slider-container">
+                            <span class="slider-label">Duración del recorrido</span>
+                            <input type="range" id="pathDuration" min="1" max="10" value="3" class="slider">
+                            <div class="slider-labels">
+                                <span>1s</span>
+                                <span id="path-duration-value">3s</span>
+                                <span>10s</span>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
                 <div class="panel-section">
-                    <h3>🎮 Controles</h3>
+                    <h3>Controles</h3>
                     <div class="button-group">
-                        <button id="set-start" class="btn btn-primary">Establecer Inicio</button>
-                        <button id="set-goal" class="btn btn-success">Establecer Meta</button>
-                        <button id="clear-path" class="btn btn-warning">Limpiar Camino</button>
-                        <button id="clear-all" class="btn btn-danger"> Limpiar Todo</button>
+                        <button id="set-start" class="btn btn-primary">
+                            <span class="btn-icon"></span>
+                            Establecer Inicio
+                        </button>
+                        <button id="set-goal" class="btn btn-secondary">
+                            <span class="btn-icon"></span>
+                            Establecer Meta
+                        </button>
+                        <button id="clear-path" class="btn btn-ghost" title="Quita sólo la visualización del camino y nodos explorados">
+                            <span class="btn-icon"></span>
+                            Limpiar Camino
+                        </button>
+                        <button id="toggle-individual" class="btn btn-ghost" title="Alternar entre vista individual y vista simultánea">
+                            <span class="btn-icon"></span>
+                            Vista Individual
+                        </button>
+                        <button id="clear-all" class="btn btn-danger" title="Borra todo (obstáculos, inicio y meta). Se pedirá confirmación">
+                            <span class="btn-icon"></span>
+                            Limpiar Todo
+                        </button>
                     </div>
                     <div class="button-group">
-                        <button id="random-obstacles" class="btn btn-secondary">Obstáculos Aleatorios</button>
+                        <button id="random-obstacles" class="btn">
+                            <span class="btn-icon"></span>
+                            Obstáculos Aleatorios
+                        </button>
                     </div>
                 </div>
 
                 <div class="panel-section">
                     <h3>Algoritmos</h3>
                     <div class="algorithm-buttons">
-                        <button id="run-astar" class="btn btn-algorithm" data-algorithm="A*">
+                        <label class="algorithm-checkbox">
+                            <input type="checkbox" class="alg-check" value="astar" checked>
+                            <span class="checkmark"></span>
                             <span class="algorithm-name">A*</span>
-                            <span class="algorithm-desc">Heurística + Costo</span>
-                        </button>
-                        <button id="run-dijkstra" class="btn btn-algorithm" data-algorithm="Dijkstra">
+                            <span class="algorithm-desc">Heurística inteligente</span>
+                        </label>
+                        <label class="algorithm-checkbox">
+                            <input type="checkbox" class="alg-check" value="dijkstra" checked>
+                            <span class="checkmark"></span>
                             <span class="algorithm-name">Dijkstra</span>
-                            <span class="algorithm-desc">Costo mínimo</span>
-                        </button>
-                        <button id="run-dstar" class="btn btn-algorithm" data-algorithm="D* Lite">
+                            <span class="algorithm-desc">Distancia mínima</span>
+                        </label>
+                        <label class="algorithm-checkbox">
+                            <input type="checkbox" class="alg-check" value="dstar" checked>
+                            <span class="checkmark"></span>
                             <span class="algorithm-name">D* Lite</span>
-                            <span class="algorithm-desc">Dinámico</span>
-                        </button>
-                        <button id="run-bmssp" class="btn btn-algorithm" data-algorithm="BMSSP">
+                            <span class="algorithm-desc">Adaptativo</span>
+                        </label>
+                        <label class="algorithm-checkbox">
+                            <input type="checkbox" class="alg-check" value="bmssp" checked>
+                            <span class="checkmark"></span>
                             <span class="algorithm-name">BMSSP</span>
-                            <span class="algorithm-desc">Búsqueda limitada</span>
+                            <span class="algorithm-desc">Búsqueda múltiple</span>
+                        </label>
+                        <button id="run-selected" class="btn btn-primary btn-run" style="grid-column: span 2; margin-top:12px">
+                            <span class="btn-icon"></span>
+                            Ejecutar Algoritmos
                         </button>
                     </div>
                 </div>
 
-                <div class="panel-section">
-                    <h3>📊 Resultados</h3>
-                    <div id="results" class="results-container">
-                        <p class="no-results">Ejecuta un algoritmo para ver los resultados</p>
-                    </div>
+                <div class="panel-section small" aria-hidden="true">
+                    <div class="meta-row"><span class="meta-label">Grid:</span> <span id="grid-size" class="meta-value">--</span></div>
+                    <div class="meta-row"><span class="meta-label">Estado:</span> <span id="status" class="meta-value">Listo</span></div>
                 </div>
-            </div>
+            </aside>
 
-            <!-- Grid Visualization -->
-            <div class="visualization-area">
+            <!-- Center: Grid Visualization -->
+            <section class="visualization-area" aria-label="Visualización">
                 <div class="grid-container">
-                    <div id="grid" class="grid"></div>
+                    <div id="grid" class="grid" role="grid" aria-label="Matriz"></div>
                 </div>
-                <div class="grid-info">
+            </section>
+
+            <!-- Right: Legend & Results -->
+            <aside class="side-panel" aria-label="Información">
+                <div class="panel-section">
+                    <h3>Leyenda</h3>
                     <div class="legend">
                         <div class="legend-item">
                             <div class="legend-color start"></div>
@@ -93,46 +143,48 @@
                             <div class="legend-color obstacle"></div>
                             <span>Obstáculo</span>
                         </div>
-                        <div class="legend-item">
-                            <div class="legend-color visited"></div>
-                            <span>Visitado</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color frontier"></div>
-                            <span>Frontera</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color path"></div>
-                            <span>Camino</span>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Resultados</h3>
+                    <div id="results" class="results-container">
+                        <div class="no-results">
+                            <div class="no-results-icon"></div>
+                            <p>Ejecuta un algoritmo para ver los resultados</p>
                         </div>
                     </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Instrucciones</h3>
                     <div class="instructions">
-                        <h4> Instrucciones:</h4>
                         <ul>
-                            <li>Click izquierdo: Bloquear/desbloquear obstáculo</li>
-                            <li>Click derecho: Establecer inicio/meta</li>
-                            <li>Usa los botones para configurar y ejecutar algoritmos</li>
+                            <li><strong>Click izquierdo:</strong> Bloquear/desbloquear obstáculo</li>
+                            <li><strong>Click derecho:</strong> Establecer inicio/meta</li>
+                            <li><strong>Tip:</strong> Puedes añadir/retirar obstáculos mientras el algoritmo corre</li>
+                            <li><strong>Animación:</strong> El camino se anima gradualmente después de la búsqueda</li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </aside>
         </div>
 
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div class="status-item">
-                <span class="status-label">Estado:</span>
-                <span id="status" class="status-value">Listo</span>
-            </div>
+        <!-- Status Bar (compact) -->
+        <footer class="status-bar">
             <div class="status-item">
                 <span class="status-label">Modo:</span>
                 <span id="mode" class="status-value">Navegación</span>
             </div>
             <div class="status-item">
-                <span class="status-label">Grid:</span>
-                <span id="grid-size" class="status-value">30x20</span>
+                <span class="status-label">Tiempo:</span>
+                <span id="execution-time" class="status-value">--</span>
             </div>
-        </div>
+            <div class="status-item">
+                <span class="status-label">Estado:</span>
+                <span id="status" class="status-value">Listo</span>
+            </div>
+        </footer>
     </div>
 
     <script src="script.js"></script>
